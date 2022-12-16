@@ -16,5 +16,6 @@ public class Main {
 
         list.forEach(System.out::println);
 
-        String s = "dd";}
+        String s = "dd";
+    }
 }

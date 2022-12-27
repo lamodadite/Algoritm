@@ -22,7 +22,6 @@ public class Main {
                 map.put(cloth, map.getOrDefault(cloth, 0) + 1);
             }
             System.out.println(map.values().stream().mapToInt(x -> x + 1).reduce((x, y) -> x * y).getAsInt() - 1);
-            ;
         }
     }
 }

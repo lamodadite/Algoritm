@@ -1,66 +1,42 @@
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.SimpleTimeZone;
 
 public class Main {
-    public static int[] arr = {4, 4, 2, 5, 8, 5, 1, 2, 4, 5};
-
+    public static int n;
+    public static int m;
+    public static boolean[] visit;
+    public static int[] arr;
+    public static StringBuilder sb = new StringBuilder();
     public static void main(String[] args) {
 
+        n = 4;
+        m = 2;
 
-        merge_sort(0, arr.length -1);
+        visit = new boolean[n];
+        arr = new int[m];
 
-        System.out.println(Arrays.toString(arr));
+        dfs(0);
+
+        System.out.println(sb);
     }
 
-    private static void merge_sort(int left, int right) {
-
-        if (right == left) {
+    private static void dfs(int depth) {
+        if (depth == m) {
+            for (int i = 0; i < m; i++) {
+                sb.append(arr[i]).append(" ");
+            }
+            sb.append("\n");
             return;
         }
 
-        int mid = left + (right - left) / 2;
-
-        merge_sort(left, mid);
-        merge_sort(mid + 1, right);
-        merge(left, mid, right);
-    }
-
-    private static void merge(int left, int mid, int right) {
-        int[] sortedArr = new int[arr.length];
-
-        int l = left;
-        int r = mid + 1;
-        int idx = left;
-
-        while (l <= mid && r <= right) {
-            if (arr[r] < arr[l]) {
-                sortedArr[idx] = arr[r];
-                r++;
-                idx++;
-            } else {
-                sortedArr[idx] = arr[l];
-                l++;
-                idx++;
+        for (int i = 0; i < n; i++) {
+            if (!visit[i]) {
+                visit[i] = true;
+                arr[depth] = i + 1;
+                dfs(depth + 1);
+                visit[i] = false;
             }
-        }
-
-        if (l > mid) {
-            while (r <= right) {
-                sortedArr[idx] = arr[r];
-                r++;
-                idx++;
-            }
-        } else {
-            while (l <= mid) {
-                sortedArr[idx] = arr[l];
-                l++;
-                idx++;
-            }
-        }
-
-        for (int i = left; i <= right; i++) {
-            arr[i] = sortedArr[i];
         }
     }
-
 }

@@ -7,8 +7,8 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         int n = sc.nextInt();
-        int[] road = new int[n - 1];
-        int[] station = new int[n];
+        long[] road = new long[n - 1];
+        long[] station = new long[n];
 
         for (int i = 0; i < n - 1; i++) {
             road[i] = sc.nextInt();
@@ -19,7 +19,7 @@ public class Main {
         }
         int p1 = 0;
         int p2 = 1;
-        int result = 0;
+        long result = 0;
         while (p2 < n) {
             if (station[p1] > station[p2] || p2 == n - 1) {
                 int temp = 0;

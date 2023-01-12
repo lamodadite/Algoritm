@@ -1,42 +1,49 @@
-import java.util.Arrays;
 import java.util.Scanner;
-import java.util.SimpleTimeZone;
 
 public class Main {
-    public static int n;
-    public static int m;
-    public static boolean[] visit;
     public static int[] arr;
-    public static StringBuilder sb = new StringBuilder();
+    public static int cnt;
+
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-        n = 4;
-        m = 2;
+        int n = sc.nextInt();
 
-        visit = new boolean[n];
-        arr = new int[m];
+        arr = new int[n];
+        queen(0);
 
-        dfs(0);
-
-        System.out.println(sb);
+        System.out.println(cnt);
     }
 
-    private static void dfs(int depth) {
-        if (depth == m) {
-            for (int i = 0; i < m; i++) {
-                sb.append(arr[i]).append(" ");
-            }
-            sb.append("\n");
+    private static void queen(int depth) {
+        if (depth == arr.length) {
+            cnt++;
             return;
         }
 
-        for (int i = 0; i < n; i++) {
-            if (!visit[i]) {
-                visit[i] = true;
-                arr[depth] = i + 1;
-                dfs(depth + 1);
-                visit[i] = false;
+        for (int i = 0; i < arr.length; i++) {
+            arr[depth] = i;
+            if (possible(depth)) {
+                queen(depth + 1);
             }
         }
+    }
+
+    private static boolean possible(int col) {
+
+        for (int i = 0; i < col; i++) {
+            // 해당 열의 행과 i열의 행이 일치할경우 (같은 행에 존재할 경우)
+            if (arr[col] == arr[i]) {
+                return false;
+            }
+
+            // 대각선상에 놓여있는 경우
+            // 열의 차와 행의 차가 같을 경우
+            else if (Math.abs(col - i) == Math.abs(arr[col] - arr[i])) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

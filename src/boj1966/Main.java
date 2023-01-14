@@ -24,6 +24,8 @@ public class Main {
             }
 
             int count = 0;
+            char d = 'd';
+            int i1 = Integer.parseInt(String.valueOf(d));
 
             while (!q.isEmpty()) {	// 한 케이스에 대한 반복문
 

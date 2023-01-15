@@ -1,5 +1,6 @@
 package boj4949;
 
+import java.util.ArrayDeque;
 import java.util.Scanner;
 import java.util.Stack;
 import java.util.stream.IntStream;

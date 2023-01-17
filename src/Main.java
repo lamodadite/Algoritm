@@ -1,49 +1,73 @@
-import java.util.Scanner;
+import java.util.*;
+import java.io.*;
 
 public class Main {
-    public static int[] arr;
-    public static int cnt;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int inputLine = Integer.parseInt(br.readLine());
+        Stack<Character> items = new Stack<>();
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Solution s = new Solution(items, inputLine, br);
 
-        int n = sc.nextInt();
+        s.solution();
+    }
+}
+class Solution {
+    public Stack<Character> stack;
+    private final int INPUT_LINE;
 
-        arr = new int[n];
-        queen(0);
+    BufferedReader br;
 
-        System.out.println(cnt);
+
+    public Solution(Stack<Character> stack, int inputLine, BufferedReader br){
+        this.stack = stack;
+        this.INPUT_LINE = inputLine;
+        this.br = br;
     }
 
-    private static void queen(int depth) {
-        if (depth == arr.length) {
-            cnt++;
-            return;
+    public void solution() throws IOException {
+        List<String> result = new ArrayList<>();
+        int cnt = INPUT_LINE;
+        while(0 < cnt) {
+
+            String temp = br.readLine();
+            String checked = checkedCondition(temp);
+
+            // 결과 넣어주기
+            result.add(checked);
+
+            // stack clear
+            stack.clear();
+
+            // 기저조건
+            cnt -= 1;
         }
 
-        for (int i = 0; i < arr.length; i++) {
-            arr[depth] = i;
-            if (possible(depth)) {
-                queen(depth + 1);
-            }
+        printResult(result);
+    }
+
+    private void printResult(List<String> result) {
+        for(String e : result) {
+            System.out.println(e);
         }
     }
 
-    private static boolean possible(int col) {
-
-        for (int i = 0; i < col; i++) {
-            // 해당 열의 행과 i열의 행이 일치할경우 (같은 행에 존재할 경우)
-            if (arr[col] == arr[i]) {
-                return false;
-            }
-
-            // 대각선상에 놓여있는 경우
-            // 열의 차와 행의 차가 같을 경우
-            else if (Math.abs(col - i) == Math.abs(arr[col] - arr[i])) {
-                return false;
+    public String checkedCondition(String parentheses) {
+        for(int i = 0; i < parentheses.length(); i++) {
+            // '(' 라면 푸쉬
+            if(parentheses.charAt(i) == '(') {
+                stack.push(parentheses.charAt(i));
+                // ')' 라면...
+            } else {
+                // [1] stack의 비어있는지 확인
+                if(stack.isEmpty()) return "NO";
+                // [2] 안비어있다면, pop
+                stack.pop();
             }
         }
 
-        return true;
+        String result = stack.isEmpty() ? "YES" : "NO";
+
+        return result;
     }
 }

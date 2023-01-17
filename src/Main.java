@@ -1,73 +1,21 @@
 import java.util.*;
 import java.io.*;
 
-public class Main {
-    public static void main(String[] args) throws IOException {
+public class Main{
+    public static void main(String[] args) throws IOException{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int inputLine = Integer.parseInt(br.readLine());
-        Stack<Character> items = new Stack<>();
 
-        Solution s = new Solution(items, inputLine, br);
+        int N = Integer.parseInt(br.readLine());
 
-        s.solution();
-    }
-}
-class Solution {
-    public Stack<Character> stack;
-    private final int INPUT_LINE;
-
-    BufferedReader br;
-
-
-    public Solution(Stack<Character> stack, int inputLine, BufferedReader br){
-        this.stack = stack;
-        this.INPUT_LINE = inputLine;
-        this.br = br;
-    }
-
-    public void solution() throws IOException {
-        List<String> result = new ArrayList<>();
-        int cnt = INPUT_LINE;
-        while(0 < cnt) {
-
-            String temp = br.readLine();
-            String checked = checkedCondition(temp);
-
-            // 결과 넣어주기
-            result.add(checked);
-
-            // stack clear
-            stack.clear();
-
-            // 기저조건
-            cnt -= 1;
-        }
-
-        printResult(result);
-    }
-
-    private void printResult(List<String> result) {
-        for(String e : result) {
-            System.out.println(e);
-        }
-    }
-
-    public String checkedCondition(String parentheses) {
-        for(int i = 0; i < parentheses.length(); i++) {
-            // '(' 라면 푸쉬
-            if(parentheses.charAt(i) == '(') {
-                stack.push(parentheses.charAt(i));
-                // ')' 라면...
-            } else {
-                // [1] stack의 비어있는지 확인
-                if(stack.isEmpty()) return "NO";
-                // [2] 안비어있다면, pop
-                stack.pop();
+        for (int j = 1; j <= N; j++) {
+            for(int i = N - 1; i >= j; i--) {
+                System.out.print(" ");
             }
+
+            for(int i = 1; i <= j; i++) {
+                System.out.print(i);
+            }
+            System.out.println();
         }
-
-        String result = stack.isEmpty() ? "YES" : "NO";
-
-        return result;
     }
 }

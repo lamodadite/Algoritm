@@ -2,28 +2,35 @@ import java.util.*;
 import java.io.*;
 
 public class Main{
+    public static int[] lines;
     public static void main(String[] args) throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        Scanner sc = new Scanner(System.in);
 
-        int n = Integer.parseInt(br.readLine());
-        String[] strings = br.readLine().split(" ");
-        int[] arr = new int[n];
-        int[] dp = new int[n];
-        dp[0] = 1;
-        for (int i = 0; i < n; i++) {
-            arr[i] = Integer.parseInt(strings[i]);
-        }
-
-        for (int i = 1; i < n; i++) {
-            dp[i] = 1;
-            for (int j = 0; j < i; j++) {
-                if (arr[i] > arr[j] && dp[i] < dp[j] + 1) {
-                    dp[i] = dp[j] + 1;
-                }
+        int k = sc.nextInt(); // 이미 갖고 있는 랜선의 개수
+        int n = sc.nextInt(); // 필요한 랜선의 개수
+        lines = new int[k];
+        long max = 0;
+        for (int i = 0; i < k; i++) {
+            lines[i] = sc.nextInt();
+            if (max < lines[i]) {
+                max = lines[i];
             }
         }
 
-        System.out.println(Arrays.stream(dp).max().getAsInt());
+        System.out.println(upperBound(1, max + 1, n) - 1);
+    }
 
+    private static long upperBound(long lo, long hi, int target) {
+
+        while (lo < hi) {
+            long mid = lo + (hi - lo) / 2;
+            long cnt = Arrays.stream(lines).mapToLong(x -> x / mid).sum();
+            if (cnt < target) {
+                hi = mid;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        return lo;
     }
 }

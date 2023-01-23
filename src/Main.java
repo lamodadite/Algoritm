@@ -2,35 +2,49 @@ import java.util.*;
 import java.io.*;
 
 public class Main{
-    public static int[] lines;
-    public static void main(String[] args) throws IOException{
-        Scanner sc = new Scanner(System.in);
+    public static int[] arr = {1, 2, 3, 3, 3, 3, 4, 5, 6, 6, 7};
+    public static void main(String[] args) throws IOException {
 
-        int k = sc.nextInt(); // 이미 갖고 있는 랜선의 개수
-        int n = sc.nextInt(); // 필요한 랜선의 개수
-        lines = new int[k];
-        long max = 0;
-        for (int i = 0; i < k; i++) {
-            lines[i] = sc.nextInt();
-            if (max < lines[i]) {
-                max = lines[i];
-            }
-        }
 
-        System.out.println(upperBound(1, max + 1, n) - 1);
+        int target = 7;
+
+        System.out.println(lowerBound(0, arr.length - 1, target));
+        System.out.println(upperBound(0, arr.length - 1, target));
     }
 
-    private static long upperBound(long lo, long hi, int target) {
+    private static int lowerBound(int min, int max, int target) {
+        int lo = min;
+        int hi = max;
 
         while (lo < hi) {
-            long mid = lo + (hi - lo) / 2;
-            long cnt = Arrays.stream(lines).mapToLong(x -> x / mid).sum();
-            if (cnt < target) {
-                hi = mid;
-            } else {
+
+            int mid = lo + (hi - lo) / 2;
+
+            if (arr[mid] < target) {
                 lo = mid + 1;
+            } else {
+                hi = mid;
             }
         }
         return lo;
     }
+
+    private static int upperBound(int min, int max, int target) {
+        int lo = min;
+        int hi = max;
+
+        while (lo < hi) {
+
+            int mid = lo + (hi - lo) / 2;
+
+            if (arr[mid] <= target) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+        return lo;
+    }
+
+
 }

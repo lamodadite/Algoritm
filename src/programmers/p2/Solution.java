@@ -1,56 +1,75 @@
 package programmers.p2;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 class Solution {
-    public static int[][] solution(int[][] s, int[][] t) {
-        int[] decodedS = decode(s);
-        int[] decodedT = decode(t);
-        int[] combined = new int[decodedS.length];
-        for (int i = 0; i < decodedS.length; i++) {
-            combined[i] = decodedT[i] * decodedS[i];
+    public static int[] solution(int[] fees, String[] records) {
+        ArrayList<Integer> answerList = new ArrayList<>();
+        // fees -> 0 : 기본 시간, 1 : 기본 요금, 2 : 단위 시간, 3 : 단위 요금
+
+        List<String> recordsList = new ArrayList<>();
+        for (String x : records) {
+            recordsList.add(x);
         }
 
-        return RLE(combined);
-    }
+        recordsList.sort(Comparator.comparing(o -> o.split(" ")[1]));
 
-    private static int[] decode(int[][] ints) {
-        StringBuilder sb = new StringBuilder();
-        for (int[] x : ints) {
-            for (int i = 0; i < x[1]; i++) {
-                sb.append(x[0]);
+        String preCarNumber = recordsList.get(0).split(" ")[1];
+        ArrayList<String> time = new ArrayList<>();
+        time.add(recordsList.get(0).split(" ")[0]);
+
+
+        for (int i = 1; i < recordsList.size(); i++) {
+            String[] split = recordsList.get(i).split(" ");
+            // 0 : 시간, 1 : 차량 번호, 2 : IN/OUT
+            if (!preCarNumber.equals(split[1])) {
+                answerList.add(getPrice(fees, time));
+                time.clear();
+                time.add(split[0]);
+                preCarNumber = split[1];
+                continue;
             }
+            time.add(split[0]);
         }
+        answerList.add(getPrice(fees, time));
 
-        return Arrays.stream(sb.toString().split("")).mapToInt(Integer::parseInt).toArray();
+        int[] answer = new int[answerList.size()];
+        for (int i = 0; i < answerList.size(); i++) answer[i] = answerList.get(i);
+        return answer;
     }
 
-    private static int[][] RLE(int[] ints) {
-        ArrayList<int[]> list = new ArrayList<>();
-        int[] temp = new int[]{ints[0], 1};
-        for (int i = 1; i < ints.length; i++) {
-            if (ints[i - 1] != ints[i]) {
-                list.add(temp);
-                temp = new int[]{ints[i], 1};
+    private static int getPrice(int[] fees, ArrayList<String> timeList) {
+        if (timeList.size() % 2 != 0) {
+            timeList.add("23:59");
+        }
+
+        int time = 0;
+        String[] splits = timeList.get(timeList.size() - 1).split(":");
+        int preTime = Integer.parseInt(splits[0]) * 60 + Integer.parseInt(splits[1]);
+        for (int i = timeList.size() - 2; i >= 0; i--) {
+            String[] split = timeList.get(i).split(":");
+            if (i % 2 != 0) {
+                preTime = Integer.parseInt(split[0]) * 60 + Integer.parseInt(split[1]);
             } else {
-                temp[1]++;
-            }
-            if (i == ints.length - 1) {
-                list.add(temp);
+                time += preTime - (Integer.parseInt(split[0]) * 60 + Integer.parseInt(split[1]));
             }
         }
-
-        return list.toArray(new int[list.size()][]);
+        if (time <= fees[0]) {
+            return fees[1];
+        } else {
+            time -= fees[0];
+            return time / fees[2] == 0?
+                    fees[1] + fees[3] : fees[1] + ((time / fees[2]) * fees[3]);
+        }
     }
 }
 
 class Test {
     public static void main(String[] args) {
 
-        int[][] s = {{1, 3}, {1, 4}};
-        int[][] t = {{5, 2}, {3, 2}, {2, 3}};
+        int[] fees = {120, 0, 60, 591};
+        String[] records = {"16:00 3961 IN", "16:00 0202 IN", "18:00 3961 OUT", "18:00 0202 OUT", "23:58 3961 IN"};
 
-        System.out.println(Arrays.deepToString(Solution.solution(s, t)));
+        System.out.println(Arrays.toString(Solution.solution(fees, records)));
     }
 }

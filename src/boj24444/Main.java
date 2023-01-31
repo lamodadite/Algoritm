@@ -22,7 +22,7 @@ public class Main {
             E[x].add(y);
             E[y].add(x);
         }
-        for (int i = 0; i < N + 1; i++) E[i].sort(Comparator.naturalOrder());
+        for (int i = 0; i < N + 1; i++) E[i].sort(Comparator.reverseOrder());
 
 
         bfs(R);

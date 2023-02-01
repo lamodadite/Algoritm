@@ -7,10 +7,8 @@ class Solution {
         ArrayList<Integer> answerList = new ArrayList<>();
         // fees -> 0 : 기본 시간, 1 : 기본 요금, 2 : 단위 시간, 3 : 단위 요금
 
-        List<String> recordsList = new ArrayList<>();
-        for (String x : records) {
-            recordsList.add(x);
-        }
+        List<String> recordsList = new ArrayList<>(Arrays.asList(records));
+
 
         recordsList.sort(Comparator.comparing(o -> o.split(" ")[1]));
 
@@ -44,22 +42,27 @@ class Solution {
         }
 
         int time = 0;
-        String[] splits = timeList.get(timeList.size() - 1).split(":");
-        int preTime = Integer.parseInt(splits[0]) * 60 + Integer.parseInt(splits[1]);
-        for (int i = timeList.size() - 2; i >= 0; i--) {
-            String[] split = timeList.get(i).split(":");
-            if (i % 2 != 0) {
-                preTime = Integer.parseInt(split[0]) * 60 + Integer.parseInt(split[1]);
-            } else {
-                time += preTime - (Integer.parseInt(split[0]) * 60 + Integer.parseInt(split[1]));
-            }
+
+        Stack<Integer> stack = new Stack<>();
+
+        for (String s : timeList) {
+            String[] splits = s.split(":");
+            int temp = Integer.parseInt(splits[0]) * 60 + Integer.parseInt(splits[1]);
+            stack.push(temp);
         }
+
+        while (!stack.isEmpty()) {
+            int outTime = stack.pop();
+            int inTime = stack.pop();
+            time += outTime - inTime;
+        }
+
         if (time <= fees[0]) {
             return fees[1];
         } else {
             time -= fees[0];
-            return time / fees[2] == 0?
-                    fees[1] + fees[3] : fees[1] + ((time / fees[2]) * fees[3]);
+            return time % fees[2] == 0? // 올림 처리 중요
+                    fees[1] + ((time / fees[2]) * fees[3]) : fees[1] + (((time / fees[2]) + 1) * fees[3]);
         }
     }
 }

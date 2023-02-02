@@ -68,8 +68,8 @@ public class Main {
             }
         }
 
-        int set_x = x/3 * 3;
-        int set_y = y/3 * 3;
+        int set_x = x / 3 * 3;
+        int set_y = y / 3 * 3;
 
         for (int i = set_x; i < set_x + 3; i++) {
             for (int j = set_y; j < set_y + 3; j++) {

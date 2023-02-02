@@ -1,7 +1,6 @@
-package programmers.p3;
+package programmers.week12.p3;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 class Solution {
     public static ArrayList<String> answer = new ArrayList<>();

@@ -1,4 +1,4 @@
-package programmers.p2;
+package programmers.week12.p2;
 
 import java.util.*;
 

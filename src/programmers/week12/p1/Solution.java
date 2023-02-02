@@ -1,4 +1,4 @@
-package programmers.p1;
+package programmers.week12.p1;
 
 class Solution {
     public static int solution(int n, int k) {

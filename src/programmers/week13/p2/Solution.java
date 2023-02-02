@@ -1,4 +1,4 @@
-package programmers.week13;
+package programmers.week13.p2;
 
 import java.util.HashMap;
 

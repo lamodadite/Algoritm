@@ -33,7 +33,6 @@ public class Main {
 
 
         qu.offer(new int[]{0, 0, 0});
-
         while (!qu.isEmpty()) {
             int[] cur = qu.poll();
 

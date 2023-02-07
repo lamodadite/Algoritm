@@ -1,50 +1,33 @@
 import java.util.*;
-import java.io.*;
 
-public class Main{
-    public static int[] arr = {1, 2, 3, 3, 3, 3, 4, 5, 6, 6, 7};
-    public static void main(String[] args) throws IOException {
+class Solution {
 
-
-        int target = 7;
-
-        System.out.println(lowerBound(0, arr.length - 1, target));
-        System.out.println(upperBound(0, arr.length - 1, target));
+    public static void main(String[] args) {
+        System.out.println(Solution.solution(new int[][]{{1,0,1,1,1},{1,0,1,0,1},{1,0,1,1,1},{1,1,1,0,1},{0,0,0,0,1}}));
     }
+    public static int solution(int[][] maps) {
+        boolean[][] visited = new boolean[maps.length][maps[0].length];
+        int[][] dir = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+        Queue<int[]> q = new LinkedList<>();
 
-    private static int lowerBound(int min, int max, int target) {
-        int lo = min;
-        int hi = max;
+        q.add(new int[]{0, 0, 1});
+        visited[0][0] = true;
+        while (!q.isEmpty()) {
+            int[] cur = q.poll();
+            if (cur[0] == maps.length - 1 && cur[1] == maps[0].length) {
+                return cur[2];
+            }
+            int nx, ny;
+            for (int i = 0; i < 4; i++) {
+                nx = cur[0] + dir[i][0];
+                ny = cur[1] + dir[i][1];
 
-        while (lo < hi) {
-
-            int mid = lo + (hi - lo) / 2;
-
-            if (arr[mid] < target) {
-                lo = mid + 1;
-            } else {
-                hi = mid;
+                if (nx >= 0 && ny >= 0 && nx < maps.length && ny < maps[0].length && !visited[nx][ny] && maps[nx][ny] == 1) {
+                    q.add(new int[]{nx, ny, cur[2] + 1});
+                    visited[nx][ny] = true;
+                }
             }
         }
-        return lo;
+        return -1;
     }
-
-    private static int upperBound(int min, int max, int target) {
-        int lo = min;
-        int hi = max;
-
-        while (lo < hi) {
-
-            int mid = lo + (hi - lo) / 2;
-
-            if (arr[mid] <= target) {
-                lo = mid + 1;
-            } else {
-                hi = mid;
-            }
-        }
-        return lo;
-    }
-
-
 }

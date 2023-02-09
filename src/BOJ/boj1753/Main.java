@@ -1,6 +1,8 @@
 package BOJ.boj1753;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 public class Main {
@@ -39,24 +41,22 @@ public class Main {
         }
         dist[k] = 0;
 
-        boolean[] visited = new boolean[v + 1];
+        PriorityQueue<Node> pq = new PriorityQueue<>((o1, o2) -> o1.weight - o2.weight);
+        pq.offer(new Node(k, 0));
 
-        for (int i = 0; i < v; i++) {
-            int minDist = Integer.MAX_VALUE;
-            int curIdx = 0;
-            for (int j = 1; j < v + 1; j++) {
-                if (!visited[j] && dist[j] < minDist) {
-                    minDist = dist[j];
-                    curIdx = j;
-                }
+        while (!pq.isEmpty()) {
+            Node curNode = pq.poll();
+
+            if (dist[curNode.to] < curNode.weight) {
+                continue;
             }
 
-            visited[curIdx] = true;
+            for (int i = 0; i < graph.get(curNode.to).size(); i++) {
+                Node adjNode = graph.get(curNode.to).get(i);
 
-            for (int j = 0; j < graph.get(curIdx).size(); j++) {
-                Node adjNode = graph.get(curIdx).get(j);
-                if (dist[adjNode.to] > dist[curIdx] + adjNode.weight) {
-                    dist[adjNode.to] = dist[curIdx] + adjNode.weight;
+                if (dist[adjNode.to] > curNode.weight + adjNode.weight) {
+                    dist[adjNode.to] = curNode.weight + adjNode.weight;
+                    pq.offer(new Node(adjNode.to, dist[adjNode.to]));
                 }
             }
         }

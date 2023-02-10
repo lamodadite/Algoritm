@@ -1,5 +1,6 @@
 package programmers.week13.p2;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 class Solution {
@@ -12,6 +13,17 @@ class Solution {
         }
         return participant[participant.length - 1];
     }
+
+//    public static String solution(String[] participant, String[] completion) {
+//        Arrays.sort(participant);
+//        Arrays.sort(completion);
+//        for (int i = 0; i < completion.length; i++) {
+//            if (!participant[i].equals(completion[i])) {
+//                return completion[i];
+//            }
+//        }
+//        return participant[participant.length - 1];
+//    }
 }
 
 class Test {

@@ -1,55 +1,68 @@
 import java.util.*;
 
 class Solution {
-    static PriorityQueue<Integer> pq = new PriorityQueue<>((x, y) -> x - y);
-    static int[][] map;
-    static int[][] dir = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
-    static int cnt;
+    static Node[] graph;
+
+
+    static class Node {
+        int idx;
+        int color;
+        ArrayList<Node> child = new ArrayList<>();
+
+        public Node(int idx, int color) {
+            this.idx = idx;
+            this.color = color;
+        }
+    }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
-        int n = sc.nextInt();
-        map = new int[n][n];
-        sc.nextLine();
-        for (int i = 0; i < n; i++) {
-            String t = sc.nextLine();
-            for (int j = 0; j < n; j++) {
-                map[i][j] = t.charAt(j) - '0';
+        int t = sc.nextInt();
+        StringBuilder sb = new StringBuilder();
+        loop:
+        while (t-- > 0) {
+            int v = sc.nextInt(); // 정점의 개수
+            int e = sc.nextInt(); // 간선의 개수
+            graph = new Node[v + 1];
+            for (int i = 1; i < graph.length; i++) graph[i] = new Node(i, 0);
+            for (int i = 0; i < e; i++) {
+                int from = sc.nextInt();
+                int to = sc.nextInt();
+                graph[from].child.add(graph[to]);
+                graph[to].child.add(graph[from]);
             }
-        }
-
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (map[i][j] == 1) {
-                    cnt = 0;
-                    bfs(i, j);
-                    pq.add(cnt);
+            for (int i = 1; i < graph.length; i++) {
+                if (graph[i].color == 0) {
+                    if (!bfs(i)) {
+                        sb.append("NO\n");
+                        continue loop;
+                    }
                 }
             }
+            sb.append("YES\n");
         }
-        StringBuilder sb = new StringBuilder();
-
-        sb.append(pq.size()).append("\n");
-        while (!pq.isEmpty()) {
-            sb.append(pq.poll()).append("\n");
-        }
-
         System.out.println(sb);
     }
 
-    static void bfs(int x, int y) {
-        cnt++;
-        map[x][y] = 0;
-        int nx, ny;
-        for (int i = 0; i < 4; i++) {
-            nx = x + dir[i][0];
-            ny = y + dir[i][1];
+    private static boolean bfs(int x) {
+        Queue<Node> q = new LinkedList<>();
+        graph[x].color = 1;
+        q.add(graph[x]);
 
-            if (nx >= 0 && ny >= 0 && nx < map.length && ny < map[0].length && map[nx][ny] == 1) {
-                bfs(nx, ny);
+        while (!q.isEmpty()) {
+            Node cur = q.poll();
+            ArrayList<Node> child = cur.child;
+            for (int j = 0; j < child.size(); j++) {
+                Node adjNode = child.get(j);
+                if (cur.color == adjNode.color) {
+                    return false;
+                }
+                if (adjNode.color == 0) {
+                    adjNode.color = (cur.color == 1 ? 2 : 1);
+                    q.add(adjNode);
+                }
             }
         }
-
+        return true;
     }
 }

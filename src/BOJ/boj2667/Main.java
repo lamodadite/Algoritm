@@ -25,7 +25,7 @@ public class Main {
             for (int j = 0; j < n; j++) {
                 if (map[i][j] == 1) {
                     cnt = 0;
-                    bfs(i, j);
+                    dfs(i, j);
                     pq.add(cnt);
                 }
             }
@@ -40,7 +40,7 @@ public class Main {
         System.out.println(sb);
     }
 
-    static void bfs(int x, int y) {
+    static void dfs(int x, int y) {
         cnt++;
         map[x][y] = 0;
         int nx, ny;
@@ -49,7 +49,7 @@ public class Main {
             ny = y + dir[i][1];
 
             if (nx >= 0 && ny >= 0 && nx < map.length && ny < map[0].length && map[nx][ny] == 1) {
-                bfs(nx, ny);
+                dfs(nx, ny);
             }
         }
 

@@ -10,6 +10,16 @@ public class Main {
     static int[][] dir = {{-1, 2}, {-2, 1}, {-2, -1}, {-1, -2},
                           {1, -2}, {2, -1}, {2, 1}, {1, 2}};
 
+    static class Point {
+        int x, y, cost;
+
+        public Point(int x, int y, int cost) {
+            this.x = x;
+            this.y = y;
+            this.cost = cost;
+        }
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -21,16 +31,6 @@ public class Main {
             sx = sc.nextInt(); sy = sc.nextInt();
             ex = sc.nextInt(); ey = sc.nextInt();
             bfs();
-        }
-    }
-
-    static class Point {
-        int x, y, cost;
-
-        public Point(int x, int y, int cost) {
-            this.x = x;
-            this.y = y;
-            this.cost = cost;
         }
     }
     private static void bfs() {

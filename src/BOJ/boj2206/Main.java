@@ -4,71 +4,69 @@ import java.util.*;
 import java.io.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(bf.readLine());
 
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
+    static class Point{
+        int x, y, crashed;
 
-        if(N-1 == 0 && M-1 == 0){
-            System.out.print(1);
-            System.exit(0);
+        public Point(int x, int y, int crashed) {
+            this.x = x;
+            this.y = y;
+            this.crashed = crashed;
         }
-
-        int[] dx = {1, 0, -1, 0};
-        int[] dy = {0, 1, 0, -1};
-
-        char[][] miro = new char[N][M];
-        int[][] dist = new int[N][M];
-        boolean[][][] visit = new boolean[2][N][M];
-        Queue<int[]> qu = new LinkedList<>();
-
-        for (int i = 0; i < N; i++) {
-            String s = bf.readLine();
-            for (int j = 0; j < M; j++) {
-                miro[i][j] = s.charAt(j);
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        if (n == 1 && m == 1) {
+            System.out.println(1);
+            return;
+        }
+        sc.nextLine();
+        int[][] map = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            String temp = sc.nextLine();
+            for (int j = 0; j < m; j++) {
+                map[i][j] = temp.charAt(j) - '0';
             }
         }
 
+        int[][] dir = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+        Queue<Point> q = new LinkedList<>();
+        int[][][] visited = new int[2][n][m];
+        q.offer(new Point(0, 0, 0));
+        visited[0][0][0] = 1;
+        int nx, ny;
+        while (!q.isEmpty()) {
+            Point cur = q.poll();
+            if (cur.x == n - 1 && cur.y == m - 1) {
+                System.out.println(visited[cur.crashed][cur.x][cur.y]);
+                return;
+            }
 
-        qu.offer(new int[]{0, 0, 0});
-        while (!qu.isEmpty()) {
-            int[] cur = qu.poll();
+            for (int i = 0; i < 4; i++) {
+                nx = cur.x + dir[i][0];
+                ny = cur.y + dir[i][1];
 
-
-            for(int i=0; i<4; i++){
-                int nX = cur[0] + dx[i];
-                int nY = cur[1] + dy[i];
-
-                if (nX < 0 || nX >= N || nY < 0 || nY >= M) {
+                if (nx < 0 || ny < 0 || nx >= n || ny >= m) {
                     continue;
                 }
 
-
-                if (miro[nX][nY] == '1') {
-                    if(cur[2] == 0 && !visit[1][nX][nY]){
-                        visit[cur[2]][nX][nY] = true;
-                        dist[nX][nY] = dist[cur[0]][cur[1]] + 1;
-                        qu.offer(new int[]{nX, nY, 1});
+                if (map[nx][ny] == 1) {
+                    if (cur.crashed == 0 && visited[1][nx][ny] == 0) {
+                        visited[cur.crashed][nx][ny] = visited[cur.crashed][cur.x][cur.y] + 1;
+                        visited[1][nx][ny] = visited[cur.crashed][cur.x][cur.y] + 1;
+                        q.offer(new Point(nx, ny, cur.crashed + 1));
                     }
-                }
-
-                else{
-                    if(!visit[cur[2]][nX][nY]){
-                        visit[cur[2]][nX][nY] = true;
-                        dist[nX][nY] = dist[cur[0]][cur[1]] + 1;
-                        qu.offer(new int[]{nX, nY, cur[2]});
+                } else {
+                    if (visited[cur.crashed][nx][ny] == 0) {
+                        visited[cur.crashed][nx][ny] = visited[cur.crashed][cur.x][cur.y] + 1;
+                        q.offer(new Point(nx, ny, cur.crashed));
                     }
-                }
-
-                if(nX == N-1 && nY == M-1){
-                    System.out.print(dist[nX][nY] + 1);
-                    System.exit(0);
                 }
             }
         }
 
-        System.out.print(-1);
+        System.out.println(-1);
     }
 }

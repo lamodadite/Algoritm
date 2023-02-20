@@ -27,14 +27,17 @@ public class Main {
         visited[x] = true;
         while (!q.isEmpty()) {
             Point cur = q.poll();
+
             if (cur.x == 100) {
                 System.out.println(cur.y);
                 return;
             }
+
             if (board[cur.x] != 0) {
                 cur.x = board[cur.x];
                 visited[cur.x] = true;
             }
+
             for (int i = 1; i <= 6; i++) {
                 int nx = cur.x + i;
                 if (nx > 0 && nx < 101) {

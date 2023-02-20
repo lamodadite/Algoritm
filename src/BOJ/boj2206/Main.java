@@ -54,7 +54,6 @@ public class Main {
 
                 if (map[nx][ny] == 1) {
                     if (cur.crashed == 0 && visited[1][nx][ny] == 0) {
-                        visited[cur.crashed][nx][ny] = visited[cur.crashed][cur.x][cur.y] + 1;
                         visited[1][nx][ny] = visited[cur.crashed][cur.x][cur.y] + 1;
                         q.offer(new Point(nx, ny, cur.crashed + 1));
                     }

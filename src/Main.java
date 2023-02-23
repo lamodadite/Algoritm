@@ -1,43 +1,23 @@
 import java.util.*;
+import java.util.stream.IntStream;
+
+import static java.util.stream.Collectors.toList;
 
 class Solution {
-    static boolean[] prime = new boolean[1001];
-    static int answer = 0;
-    static int[] arr = new int[3];
+
 
     public static void main(String[] args) {
         int[] nums = {1, 2, 7, 6, 4};
-        prime();
-        reculsion(nums, 0, 0);
+        int[] answer = new int[nums.length];
 
-        System.out.println(answer);
+        int[] newArr = Arrays.copyOfRange(nums, 1, 3);
+        Arrays.sort(newArr);
+        answer[1] = newArr[1];
+
+        List<Integer> collect = Arrays.stream(nums).boxed().toList();
+        int[] array = collect.stream().mapToInt(x -> x).toArray();
+
+        System.out.println(Arrays.toString(newArr));
     }
 
-    private static void reculsion(int[] nums, int depth, int start) {
-        if (depth == 3) {
-            System.out.println(Arrays.toString(arr));
-            if (!prime[Arrays.stream(arr).sum()]) {
-                answer++;
-            }
-            return;
-        }
-        for (int i = start; i < nums.length; i++) {
-            arr[depth] = nums[i];
-            reculsion(nums, depth + 1, i + 1);
-        }
-
-
-    }
-
-    public static void prime() {
-        prime[0] = true;
-        prime[1] = true;
-
-        for (int i = 2; i < Math.sqrt(prime.length); i++) {
-            if (prime[i]) continue;
-            for (int j = i * i; j < prime.length; j += i) {
-                prime[j] = true;
-            }
-        }
-    }
 }

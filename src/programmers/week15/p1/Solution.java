@@ -29,6 +29,7 @@ public class Solution {
 //
 //        return answer;
 
+
         return IntStream.range(0, arr.length)
                 .filter(i -> i == 0 || arr[i - 1] != arr[i])
                 .map(i -> arr[i])

@@ -23,7 +23,6 @@ public class Main {
                 } else {
                     dp[i + 1][j] = Math.max(dp[i][j], dp[i][j - items[i][0]] + items[i][1]);
                 }
-
             }
         }
 

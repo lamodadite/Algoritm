@@ -1,17 +1,17 @@
 package BOJ.boj10431;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Scanner;
 
 public class Main {
     static int[] ordered;
     static int cnt;
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
         int t = sc.nextInt();
 
-        while (t--> 0) {
+        while (t-- > 0) {
             int n = sc.nextInt();
             cnt = 0;
             int[] heights = new int[20];

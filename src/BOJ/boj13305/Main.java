@@ -33,6 +33,7 @@ public class Main {
             sum += min * road[i];
         }
 
+
         System.out.println(sum);
     }
 

@@ -1,5 +1,6 @@
 package BOJ.boj10431;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -16,7 +17,6 @@ public class Main {
             cnt = 0;
             int[] heights = new int[20];
             ordered = new int[20];
-
             for (int i = 0; i < 20; i++) {
                 heights[i] = sc.nextInt();
             }

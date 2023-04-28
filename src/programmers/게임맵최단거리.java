@@ -16,7 +16,7 @@ public class 게임맵최단거리 {
             visited[0][0] = true;
             while (!q.isEmpty()) {
                 int[] cur = q.poll();
-                if (cur[0] == maps.length - 1 && cur[1] == maps[0].length) {
+                if (cur[0] == maps.length - 1 && cur[1] == maps[0].length - 1) {
                     return cur[2];
                 }
                 int nx, ny;

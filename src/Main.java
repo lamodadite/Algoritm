@@ -5,19 +5,38 @@ import static java.util.stream.Collectors.toList;
 
 class Solution {
 
+    static boolean[] primes;
 
     public static void main(String[] args) {
-        int[] nums = {1, 2, 7, 6, 4};
-        int[] answer = new int[nums.length];
 
-        int[] newArr = Arrays.copyOfRange(nums, 1, 3);
-        Arrays.sort(newArr);
-        answer[1] = newArr[1];
+        int N = 10000;
 
-        List<Integer> collect = Arrays.stream(nums).boxed().toList();
-        int[] array = collect.stream().mapToInt(x -> x).toArray();
+        make_primes(N);
 
-        System.out.println(Arrays.toString(newArr));
+
+        System.out.println(primes[12]);
+
+
+
+    }
+
+    private static void make_primes(int n) {
+        primes = new boolean[n + 1];
+
+        if (n < 2) {
+            return;
+        }
+
+        primes[0] = primes[1] = true;
+
+        for (int i = 2; i <= Math.sqrt(n); i++) {
+            if (primes[i]) continue;
+            for (int j = i * i; j < primes.length; j = j + i) {
+                primes[j] = true;
+            }
+        }
+
+
     }
 
 }

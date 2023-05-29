@@ -21,14 +21,14 @@ public class Main {
             long sum = 0;
             for (int j = 0; j < trees.length; j++) {
                 if (trees[j] >= i) {
-                    long piece = trees[j] / i;
-                    long div;
+                    long piece = trees[j] / i; // 장작 개수
+                    long div; // 쪼갠 횟수
                     if (trees[j] % i == 0) {
                         div = piece - 1;
                     } else {
                         div = piece;
                     }
-                    long temp = piece * W * i - div * C;
+                    long temp = piece * W * i - div * C; // 최종 비용
                     if (temp > 0) {
                         sum += temp;
                     }

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
-class Solution {
+class Dijkstra {
 
     static class Node {
         int to;
@@ -28,8 +28,6 @@ class Solution {
         int[] dist = new int[v + 1];
         Arrays.fill(dist, Integer.MAX_VALUE);
         dist[start] = 0;
-
-        boolean[] visited = new boolean[v + 1];
 
         PriorityQueue<Node> pq = new PriorityQueue<>((x, y) -> x.weight - y.weight);
         pq.add(new Node(start, 0));

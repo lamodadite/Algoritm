@@ -1,6 +1,9 @@
 package BOJ.boj10282;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.PriorityQueue;
+import java.util.Scanner;
 
 public class Main {
     static class Node {
@@ -17,7 +20,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         int t = sc.nextInt();
-        while (t--> 0) {
+        while (t-- > 0) {
             int n = sc.nextInt(); // 컴퓨터 개수
             int d = sc.nextInt();  // 의존성 개수
             int c = sc.nextInt(); // 시작 노드

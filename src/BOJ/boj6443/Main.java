@@ -21,7 +21,6 @@ public class Main {
         }
         System.out.println(sb);
     }
-
     public static boolean next_permutation(char[] arr) {
         // 주어진 순열의 뒤부터 탐색하며, 증가하는 부분(a)을 찾는다.
         int a = arr.length - 2;

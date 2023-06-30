@@ -37,10 +37,7 @@ public class Main {
             for (int i = 0; i < 6; i++) {
                 q.add(new int[]{Math.max(cur[0] - dir[i][0], 0), Math.max(cur[1] - dir[i][1], 0), Math.max(cur[2] - dir[i][2], 0), cur[3] + 1});
             }
-
-
         }
         System.out.println(min);
-
     }
 }

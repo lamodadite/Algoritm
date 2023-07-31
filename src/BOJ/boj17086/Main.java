@@ -10,9 +10,7 @@ public class Main {
     static int[][] map;
     static int[][] dir = {{0, 1}, {1, 0}, {-1, 0}, {0, -1}, {1, 1}, {-1, 1}, {-1, -1}, {1, -1}};
     static class Node {
-        int x;
-        int y;
-        int c;
+        int x, y, c;
 
         public Node(int x, int y, int c) {
             this.x = x;
